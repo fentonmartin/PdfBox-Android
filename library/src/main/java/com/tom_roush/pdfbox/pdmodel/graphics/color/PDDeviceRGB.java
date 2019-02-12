@@ -1,4 +1,25 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.tom_roush.pdfbox.pdmodel.graphics.color;
+
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import java.io.IOException;
 
 import com.tom_roush.pdfbox.cos.COSName;
 
@@ -83,13 +104,19 @@ public final class PDDeviceRGB extends PDDeviceColorSpace {
         }
     }
 
-//    @Override
-//    public BufferedImage toRGBImage(WritableRaster raster) throws IOException
-//    {
+    @Override
+    public Bitmap toRGBImage(Bitmap raster) throws IOException
+    {
+        if (raster.getConfig() == Bitmap.Config.ALPHA_8)
+        {
+            Log.e("PdfBox-Android", "Raster in PDDeviceRGB was ALPHA_8");
+        }
+        return raster;
+
 //        inti();
 //        ColorModel colorModel = new ComponentColorModel(awtColorSpace,
 //                false, false, Transparency.OPAQUE, raster.getDataBuffer().getDataType());
 //
-//        return new BufferedImage(colorModel, raster, false, null);
-//    }TODO: PdfBox-Android
+//        return new BufferedImage(colorModel, raster, false, null); TODO: PdfBox-Android
+    }
 }
